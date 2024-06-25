@@ -1,21 +1,48 @@
+import Book from '../models/book.js';
+
 const getAllBooks = (req,res) => {
 
-    const books = [
-        {
-            id: 1,
-            name: '13 Numaralı Oda',
-        },
-        {
-            id: 2,
-            name: 'Cinayet Defteri 6',
-        },
-        
-    ];
-    res.json(books);
+ console.log("Get All Books");
+};
 
+
+const createBook = async (req,res) => {
+try {
+    const { title, author} = req.body;
+
+    const existingBook = await Book.findOne({title, author});
+
+    if (existingBook) {
+        return res
+        .status(400)
+        .json({eror: 'A book with same title and author already exist!'})
+    }
+
+
+    const newBook = await Book.create(req.body);
+
+    return res.status(201).json({message: "Book created succesfully",book: newBook})
+
+} catch (error) {
+    //Handle mongoose validation error
+    if (error.name ==='ValidationError') {
+        const validationErrors = {}
+
+        for (let field in error.errors) {
+            validationErrors[field] = error.errors[field].message;
+
+        }
+        return res.status(400).json({error: "Validation error", validationErrors})
+    } else {
+        console.error("Error at creating book", error);
+        return res.status(500).json({error: 'Internal Server Error'})
+    }
 }
+};
 
 export {
-    getAllBooks
+    getAllBooks,
+    createBook 
+
 }
 

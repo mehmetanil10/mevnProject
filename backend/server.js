@@ -5,6 +5,8 @@ import connectDB from './config/db.js';
 const app = express();
 const port = 3000;
 
+app.use(express.json()); //parser methodu
+
 app.use('/api/v1/books', bookRoute);
 
 try {
@@ -17,5 +19,3 @@ try {
 } catch (error) {
     process.exit(1);
 }
-
-
