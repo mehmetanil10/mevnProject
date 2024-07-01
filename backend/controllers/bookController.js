@@ -1,5 +1,6 @@
 import Book from '../models/book.js';
-import { isValidObjectId } from '../utils/index.js';
+import { isValidObjectId, findDocumentById } from '../utils/index.js';
+
 
 const getAllBooks = async (req,res) => {
     try {
@@ -20,11 +21,10 @@ const getABook = async (req,res) => {
     if (isValidObjectId(id, res)) return;
 
 try {
-    const book = await Book.findById(id);
 
-    if(!book) {
-        return res.status(404).json({error: 'The book is not exist!'})
-    }
+    const book = await findDocumentById(Book, id, res);
+    if (!book) return;
+
 
     res.status(200).json(book);
 } catch (error) {
@@ -78,11 +78,8 @@ const { title, author, description,pageNumber, rating } = req.body;
     if (isValidObjectId(id, res)) return;
 
 try {
-    const book = await Book.findById(id);
-
-    if(!book) {
-        return res.status(404).json({error: 'The book is not exist!'})
-    }
+    const book = await findDocumentById(Book, id, res);
+    if (!book) return;
 
     book.title = title || book.title;
     book.author = author || book.author;
@@ -112,11 +109,8 @@ const deleteABook = async(req,res) => {
 
     
     try {
-        const book = await Book.findById(id);
-
-        if(!book) {
-            return res.status(404).json({error: 'The book is not exist!'})
-        }
+        const book = await findDocumentById(Book, id, res);
+        if (!book) return;
 
         await book.deleteOne();
         res.status(200).json({message: 'Book deleted succesfully.'})

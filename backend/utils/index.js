@@ -6,7 +6,23 @@ const isValidObjectId = (id, res) => {
     }
 }
 
+const findDocumentById = async (model, id, res) => {
+    try {
+        const document = await model.findById(id);
+
+        if (!document) {
+            res.status(404).json({error: `The ${model.modelName} does not exist!`});
+            return null;
+        }
+    return document;
+    } catch (error) {
+        console.error(`Error while finding ${model.modelName} by ID`, error);
+        return res.status(500).json({error: 'Internal Server error'})
+
+    }
+}
 
 export{
-    isValidObjectId
+    isValidObjectId,
+    findDocumentById
 }
