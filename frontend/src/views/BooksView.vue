@@ -48,15 +48,10 @@ export default {
         const response = await fetch('http://localhost:3000/api/v1/books');
         const data = await response.json();
         this.books = data;
-
       } catch (error) {
-
+        
       }
-
     }
-
-
-
   },
   created() {
     this.fetchBooks();
