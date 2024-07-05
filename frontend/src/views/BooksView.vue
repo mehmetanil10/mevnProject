@@ -7,7 +7,6 @@
     </div>
   </section>
 </template>
-<!-- 11. videodayız -->
 <script>
 import SectionHeader from '@/components/SectionHeader.vue';
 import BookList from '@/components/BookList.vue';

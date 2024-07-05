@@ -42,7 +42,6 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -56,7 +55,8 @@ import hero_1 from "@/assets/images/hero_1.jpg";
 import hero_2 from "@/assets/images/hero_2.jpg";
 import hero_3 from "@/assets/images/hero_3.jpg";
 import SectionHeader from "@/components/SectionHeader.vue";
-import books from "@/db";
+import { useBookStore } from "@/stores/bookStore";
+import { mapState } from "pinia";
 
 export default {
   name: "HomeView",
@@ -68,30 +68,20 @@ export default {
         { imageUrl: hero_2, subtitle: 'Egalite', title: 'Excepteur Sint Occaecat Cupidatat', description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' },
         { imageUrl: hero_3, subtitle: 'Fraternite', title: 'Neque Porro Quisquam Est', description: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.' }
       ],
-      books: [],
+      bStore: useBookStore(),
+      // books: [],
       selectedFilter: 'latest',
       openAccordionIndex: 0,
     }
   },
 
-  created() {
-    this.fetchBooks();
-  },
+
 
   methods: {
     selectFilter(filter) {
       this.selectedFilter = filter;
     },
-    async fetchBooks() {
-      try {
-        const response = await fetch('http://localhost:3000/api/v1/books');
-        const data = await response.json();
-        this.books = data;
-        console.log('this.books', this.books)
-      } catch (error) {
 
-      }
-    },
     toggleAccordion(index) {
       if (this.openAccordionIndex === index) {
         this.openAccordionIndex = -1
@@ -101,6 +91,8 @@ export default {
     },
   },
   computed: {
+    ...mapState(useBookStore, ['books']),
+
     filteredBooks() {
       const copiedBooks = [...this.books];
 
