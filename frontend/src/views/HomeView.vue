@@ -19,7 +19,12 @@
           </div>
         </div>
         <div class="col-md-8">
-          <div class="accordion">
+          <div v-if="isLoading" class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <div v-else class="accordion">
             <div class="accordion-item" v-for="(book, index) in filteredBooks" :key="index">
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" :class="{collapsed: openAccordionIndex !== index}"
@@ -57,6 +62,7 @@ import hero_3 from "@/assets/images/hero_3.jpg";
 import SectionHeader from "@/components/SectionHeader.vue";
 import { useBookStore } from "@/stores/bookStore";
 import { mapState } from "pinia";
+import { mapActions } from "pinia";
 
 export default {
   name: "HomeView",
@@ -75,9 +81,12 @@ export default {
     }
   },
 
-
+  created() {
+    this.fetchBooks();
+  },
 
   methods: {
+    ...mapActions(useBookStore, ['fetchBooks']),
     selectFilter(filter) {
       this.selectedFilter = filter;
     },
@@ -91,7 +100,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(useBookStore, ['books']),
+    ...mapState(useBookStore, ['books', 'isLoading']),
 
     filteredBooks() {
       const copiedBooks = [...this.books];
