@@ -20,9 +20,20 @@ const findDocumentById = async (model, id, res) => {
         return res.status(500).json({error: 'Internal Server error'})
 
     }
+};
+
+const checkValidationErrors = (error, res) => {
+    const validationErrors = {}
+
+    for (let field in error.errors) {
+        validationErrors[field] = error.errors[field].message;
+
+    }
+    return res.status(400).json({error: "Validation error", validationErrors})
 }
 
 export{
     isValidObjectId,
-    findDocumentById
+    findDocumentById,
+    checkValidationErrors
 }
