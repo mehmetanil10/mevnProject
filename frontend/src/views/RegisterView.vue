@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { useAuthStore } from '@/stores/authStore.js'
+import { mapActions } from 'pinia';
 export default {
   name: "RegisterView",
 
@@ -54,11 +56,17 @@ export default {
     }
   },
   methods: {
-    submitForm() {
-      console.log("register formData::", this.formData)
-    }
+    ...mapActions(useAuthStore, ['register']),
+    async submitForm() {
+      try {
+        await this.register(this.formData)
+        console.log("Registration Succes");
+      } catch (error) {
+        console.log("Registration failed");
+      }
+    },
 
-  }
+  },
 }
 </script>
 

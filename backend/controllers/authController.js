@@ -16,6 +16,8 @@ const register = async (req, res) => {
          
         const newUser = await User.create(req.body);
 
+        newUser.password = undefined;
+
         return res
         .status(201)
         .json({message: 'User created succesfully', user: newUser})
@@ -25,7 +27,7 @@ const register = async (req, res) => {
             //Handle mongoose validation error
     if (error.name ==='ValidationError') {
        if(checkValidationErrors(error,res)) return;
-       
+
         
     } else {
         console.error("Error at Register", error);
