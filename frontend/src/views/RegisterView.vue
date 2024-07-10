@@ -60,7 +60,7 @@ export default {
     async submitForm() {
       try {
         await this.register(this.formData)
-        console.log("Registration Succes");
+        this.$router.push('/login')
       } catch (error) {
         console.log("Registration failed");
       }
