@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import {checkValidationErrors} from '../utils/index.js'
+import bcrypt from "bcryptjs";
 
 const register = async (req, res) => {
 
@@ -37,4 +38,43 @@ const register = async (req, res) => {
 
 };
 
-export { register };
+const login = async (req, res) => { 
+try {
+    const {email, password} = req.body;
+    const user = await User.findOne({ email });
+
+    // Check user if exist
+    if (!user) {
+        return res
+        .status(404)
+        .json({error: 'User not found!'})
+    }
+
+    // Check if password correct
+
+    const isValidPassword = await bcrypt.compare(password, user.password)
+
+
+
+    if(!isValidPassword) {
+        return res
+        .status(401)
+        .json({error: 'Your Password is not true!'})
+    }
+
+    user.password = undefined;
+
+
+    return res.status(200).json({message: 'user logged in succesfully!', user})
+
+} catch (error) {
+    console.error("Error at Login", error);
+    return res.status(500).json({error: 'Internal Server Error'});
+}
+
+}
+
+
+
+
+export { register, login };
