@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import {checkValidationErrors} from '../utils/index.js'
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken"
 
 const register = async (req, res) => {
 
@@ -64,8 +65,12 @@ try {
 
     user.password = undefined;
 
+    //generate token
+    const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET_KEY, {expiresIn: process.env.JWT_EXPIRE_TIME,
 
-    return res.status(200).json({message: 'user logged in succesfully!', user})
+    });
+
+    return res.status(200).json({message: 'User logged in succesfully!', user, token})
 
 } catch (error) {
     console.error("Error at Login", error);

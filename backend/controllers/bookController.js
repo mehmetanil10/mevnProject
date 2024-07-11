@@ -90,7 +90,10 @@ try {
 }
 
 const deleteABook = async(req,res) => {
-    const {id} = req.params;
+
+    console.log("req.user", req.user);
+
+    const { id } = req.params;
 
     if (isValidObjectId(id, res)) return;
 
