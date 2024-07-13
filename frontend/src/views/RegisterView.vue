@@ -34,7 +34,7 @@
             <input type="email" class="form-control" id="email" name="email" v-model.trim="formData.email" required
               autocomplete="off" :class="{
                 'is-valid' : isEmailValid,
-                'is-invalid': !isEmailValid && showEmailWarningMessage || existingEmail===formData.email
+                'is-invalid': (!isEmailValid && showEmailWarningMessage) || existingEmail===formData.email
               }" @focus="showEmailWarningMessage = true" @blur="showEmailWarningMessage = false">
             <span v-if="showEmailWarningMessage && !isEmailValid" class="text-danger small">
               Please provide a valid email!
@@ -77,6 +77,8 @@
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
 import { mapActions } from 'pinia';
+import { useToast } from "vue-toastification";
+
 export default {
   name: "RegisterView",
 
@@ -99,7 +101,20 @@ export default {
     async submitForm() {
       try {
         await this.register(this.formData)
-        this.$router.push('/login')
+
+        const toast = useToast();
+
+        toast.success('You will be redirect the login page!', {
+          position: "top-right",
+          timeout: 3500,
+          closeButton: "button",
+          icon: true,
+        })
+
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 4000);
+
       } catch (data) {
         const { error } = data;
 
@@ -137,32 +152,9 @@ export default {
       );
     },
 
-  }
+  },
 
 }
 </script>
 
-<style scoped>
-.form-control {
-  border-radius: 25px;
-  height: 48px;
-}
-
-.form-control:focus {
-  box-shadow: none;
-}
-
-.btn-primary {
-  border-radius: 25px;
-  height: 48px;
-  background-color: var(--secondary-color);
-  border: 1px solid var(--secondary-color);
-}
-
-.btn-primary:hover {
-  background-color: #fff;
-  color: var(--secondary-color);
-  transition: all 0.3s ease;
-
-}
-</style>
+<style scoped></style>

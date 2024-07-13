@@ -6,7 +6,17 @@
           <!-- Email Field (Medium and Larger Screens) -->
           <div class="col-md-6 col-8 mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" v-model.trim="formData.email" required>
+            <input type="email" class="form-control" id="email" name="email" v-model.trim="formData.email" required
+              autocomplete="off" :class="{
+                'is-valid' : isEmailValid,
+                'is-invalid': (!isEmailValid && showEmailWarningMessage) || notFoundEmail,
+              }" @focus="showEmailWarningMessage = true" @blur="showEmailWarningMessage = false">
+            <span v-if="showEmailWarningMessage && !isEmailValid" class="text-danger small">
+              Please provide a valid email!
+            </span>
+            <span v-if="notFoundEmail === formData.email" class="text-danger small">
+              {{`"${notFoundEmail}" is not found!`}}
+            </span>
           </div>
         </div>
 
@@ -15,7 +25,17 @@
           <div class="col-md-6 col-8 mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" v-model.trim="formData.password"
-              required>
+              required :class="{
+                'is-valid' : isPasswordValid,
+                'is-invalid': (!isPasswordValid && showPasswordWarningMessage) || !isPasswordMatch,
+              }" @focus="showPasswordWarningMessage = true" @blur="showPasswordWarningMessage = false"
+              @input="isPasswordMatch = true">
+            <span v-if="showPasswordWarningMessage && !isPasswordValid" class="text-danger small">
+              Password must be between 4 and 10 characters!
+            </span>
+            <span v-if="!isPasswordMatch" class="text-danger small">
+              Your password is not true!
+            </span>
           </div>
         </div>
 
@@ -34,6 +54,8 @@
 
 import { useAuthStore } from '@/stores/authStore.js'
 import { mapActions } from 'pinia';
+import { useToast } from "vue-toastification";
+
 
 export default {
   name: "LoginView",
@@ -43,7 +65,11 @@ export default {
       formData: {
         email: '',
         password: '',
-      }
+      },
+      showEmailWarningMessage: false,
+      showPasswordWarningMessage: false,
+      notFoundEmail: null,
+      isPasswordMatch: true,
     }
   },
   methods: {
@@ -51,14 +77,50 @@ export default {
     async submitForm() {
       try {
         await this.login(this.formData)
-        this.$router.push('/dashboard')
-      } catch (error) {
-        console.log("Login failed");
+
+
+        const toast = useToast();
+
+        toast.success('You will be redirect the dashboard page!', {
+          position: "top-right",
+          timeout: 3500,
+          closeButton: "button",
+          icon: true,
+        });
+
+        setTimeout(() => {
+          this.$router.push('/dashboard')
+        }, 4000);
+
+      } catch (data) {
+        const { error } = data;
+
+        if (error === 'User not found!') {
+          this.notFoundEmail = this.formData.email;
+        } else if (error === 'Your Password is not true!') {
+          this.isPasswordMatch = false
+        }
       }
     },
 
 
-  }
+  },
+  computed: {
+    isFormValid() {
+      return this.isEmailValid && this.isPasswordValid;
+    },
+    isEmailValid() {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.formData.email);
+    },
+    isPasswordValid() {
+      return (
+        this.formData.password.length >= 4 &&
+        this.formData.password.length <= 10
+      );
+    },
+
+  },
+
 }
 </script>
 

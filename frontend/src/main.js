@@ -8,6 +8,9 @@ import { createPinia } from "pinia";
 import { useBookStore } from "@/stores/bookStore";
 import { useAuthStore } from "@/stores/authStore";
 
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
 
@@ -35,7 +38,8 @@ bookStore.fetchBooks().then(()=> {
     const app = createApp(App);
     app.use(pinia);
     app.use(router);
-    app.mount('#app');
     app.component('font-awesome-icon', FontAwesomeIcon)
+    app.use(Toast);
+    app.mount('#app');
 
 })
