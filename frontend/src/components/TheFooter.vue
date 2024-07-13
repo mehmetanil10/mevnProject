@@ -1,7 +1,7 @@
 <template>
     <footer class="text-center" style="background-color: var(--primary-color);">
-        <div>
-            &copy; 2024 No Copyright: Mehmet
+        <div class="text-white p-3">
+            &copy; 2024 No Copyright: Mehmet ANIL
         </div>
     </footer>
 </template>
@@ -12,4 +12,4 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped></style>

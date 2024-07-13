@@ -1,22 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700&display=swap');
 
 /* Root Variables */
 :root {
-    --primary-color: #063547;
-    --secondary-color: #44b89d;
+  --primary-color: #063547;
+  --secondary-color: #44b89d;
 }
 
 /* General Settings */
 html,
 body {
-  font-family: "Mulish", sans-serif;
+  font-family: 'Mulish', sans-serif;
 }
 
 a {
   text-decoration: none;
 }
-
 
 /* Custom Settings */
 .full-section-height {
@@ -39,11 +37,11 @@ a {
   height: 48px;
   background-color: var(--secondary-color) !important;
   border: 1px solid var(--secondary-color) !important;
+  min-width: 175px;
 }
 
 .btn-primary:hover {
   background-color: #fff !important;
   color: var(--secondary-color) !important;
-  transition: all 0.3s ease ;
-
+  transition: all 0.3s ease;
 }
