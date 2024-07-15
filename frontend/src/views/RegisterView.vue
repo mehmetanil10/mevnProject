@@ -109,6 +109,7 @@ export default {
           timeout: 3500,
           closeButton: "button",
           icon: true,
+          rtl: false,
         })
 
         setTimeout(() => {
