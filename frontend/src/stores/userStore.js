@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-export const useUSerStore = defineStore('userStore', {
+export const useUserStore = defineStore('userStore', {
 
     actions: {
         async updateUserDetails(updatedUserData) {

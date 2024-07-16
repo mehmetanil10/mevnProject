@@ -67,8 +67,8 @@
 import { useAuthStore } from '@/stores/authStore.js';
 import { useUserStore } from '@/stores/userStore.js';
 import { useToast } from "vue-toastification";
-
 import { mapState, mapActions } from 'pinia';
+
 export default {
     name: 'DashboardView',
     data() {
@@ -90,7 +90,7 @@ export default {
         ...mapState(useAuthStore, ['user']),
     },
     methods: {
-        ...mapActions(useUserStore, ['user']),
+        ...mapActions(useUserStore, ['updateUserDetails']),
         ...mapActions(useAuthStore, ['logout']),
         toggleEditMode() {
             this.editMode = !this.editMode;
@@ -99,7 +99,6 @@ export default {
         async saveUserInfo() {
             try {
                 await this.updateUserDetails(this.userInfo);
-
 
                 const toast = useToast();
 
