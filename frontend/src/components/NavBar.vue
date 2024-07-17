@@ -47,8 +47,8 @@ export default {
     ...mapActions(useAuthStore, ['logout']),
     logoutUser() {
       this.logout();
-    }
-  }
+    },
+  },
 
 
 };

@@ -20,7 +20,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsUp} from '@fortawesome/free-regular-svg-icons'
-library.add(faArrowLeft, faThumbsUp)
+import { faPenToSquare} from '@fortawesome/free-regular-svg-icons'
+import { faTrash} from '@fortawesome/free-solid-svg-icons'
+
+library.add(faArrowLeft, faThumbsUp, faPenToSquare, faTrash)
 
 const pinia = createPinia();
 

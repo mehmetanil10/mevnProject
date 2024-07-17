@@ -5,8 +5,8 @@ const router = express.Router();
 
 
 router
-.route('/updateUser')
-.put(authMiddleware.authenticateUser, userController.updateUser);
+    .route('/updateUser')
+    .put(authMiddleware.authenticateUser, userController.updateUser);
 
 
 export default router;
