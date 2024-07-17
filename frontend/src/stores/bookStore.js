@@ -5,6 +5,7 @@ export const useBookStore = defineStore('bookStore', {
     state: () => ( {
          books:[],
          isLoading: false,
+         userUploadedBooks: [],
     }),
 
     getters: {
@@ -25,6 +26,16 @@ export const useBookStore = defineStore('bookStore', {
                 this.isLoading = false;
             }
         },
+
+        async fetchBooksByUploader() {
+            try {
+            const response = await axios.get('http://localhost:3000/api/v1/books/uploader');
+            this.userUploadedBooks = response.data;
+            } catch (error) {
+                console.error('Error at user uploaded books', error)
+            }
+        },
+
         async addNewBook(newBook) {
             console.log("store new book", newBook)
             try {

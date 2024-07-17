@@ -29,7 +29,7 @@
                     <DashboardBooks>
 
                     </DashboardBooks>
-                    books
+
                 </div>
             </div>
         </div>

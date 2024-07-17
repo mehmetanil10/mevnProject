@@ -15,6 +15,22 @@ const getAllBooks = async (req,res) => {
 
 };
 
+const getBooksByUploader = async(req,res) => {
+    try {
+
+        const uploaderId = req.user._id;
+
+        const books = await Book.find({ uploader: uploaderId});
+        res.status(200).json(books);
+        
+    } catch (error) {
+        console.error("Error at getBooksByUploader", error);
+        return res.status(500).json({error: 'Internal Server Error'})
+        
+    }
+
+}
+
 const getABook = async (req,res) => {
     const {id} = req.params;
 
@@ -125,7 +141,8 @@ export {
     createABook,
     getABook,
     updateABook,
-    deleteABook
+    deleteABook,
+    getBooksByUploader
 
 }
 
