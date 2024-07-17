@@ -1,5 +1,5 @@
 import express from 'express';
-import * as bookController from '../controllers/bookcontroller.js';
+import * as bookController from '../controllers/bookController.js';
 import * as authMiddleware from '../middlewares/authMiddleware.js';
 const router = express.Router();
 
@@ -7,7 +7,7 @@ const router = express.Router();
 router
 .route('/')
 .get(bookController.getAllBooks)
-.post(bookController.createABook);
+.post(authMiddleware.authenticateUser, bookController.createABook);
 
 router
 .route('/:id')

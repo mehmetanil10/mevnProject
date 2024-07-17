@@ -56,32 +56,35 @@
                         <label for="title" class="form-label">Title
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" id="title" name="title" required />
+                        <input type="text" class="form-control" id="title" name="title" required
+                            v-model="newBook.title" />
                     </div>
                     <div class="col mb-3">
                         <label for="author" class="form-label">Author
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" id="author" name="author" required />
+                        <input type="text" class="form-control" id="author" name="author" required
+                            v-model="newBook.author" />
                     </div>
                     <div class="col mb-3">
                         <label for="description" class="form-label">Description
                             <span class="text-danger">*</span>
                         </label>
-                        <textarea name="description" id="description" class="form-control" cols="30"
-                            rows="10"></textarea>
+                        <textarea name="description" id="description" class="form-control" cols="30" rows="10"
+                            v-model="newBook.description"></textarea>
                     </div>
                     <div class="col mb-3">
                         <label for="author" class="form-label">Number of Pages
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="number" class="form-control" id="numOfPages" name="numOfPages" required />
+                        <input type="number" class="form-control" id="numOfPages" name="numOfPages" required
+                            v-model="newBook.pageNumber" />
                     </div>
                     <div class="text-end mb-4">
                         <button @click="modal.hide()" type="button" class="btn btn-outline-secondary">
                             Close
                         </button>
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button @click="addBook" type="button" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
@@ -90,14 +93,35 @@
 </template>
 
 <script>
+import { useBookStore } from '@/stores/bookStore.js';
+import { mapState, mapActions } from 'pinia';
 import { Modal } from 'bootstrap';
 export default {
     name: 'DashboardBooks',
     data() {
         return {
             modal: null,
+            newBook: {
+                title: '',
+                author: '',
+                description: '',
+                pageNumber: null,
+
+            }
         };
     },
+
+    methods: {
+        ...mapActions(useBookStore,['addNewBook']),
+        async addBook() {
+            try {
+                await this.addNewBook(this.newBook)
+            } catch (error) {
+
+            }
+        }
+    },
+
     mounted() {
         this.modal = new Modal(this.$refs.addEditModal)
     }

@@ -36,8 +36,8 @@
 <script>
 import { useAuthStore } from '@/stores/authStore.js';
 import { useUserStore } from '@/stores/userStore.js';
-import { useToast } from "vue-toastification";
 import { mapState, mapActions } from 'pinia';
+import { useToast } from "vue-toastification";
 export default {
     name: 'DashboardGeneral',
     data() {
