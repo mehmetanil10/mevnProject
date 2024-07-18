@@ -152,15 +152,13 @@ export default {
                     icon: true,
                     rtl: false,
                 });
-
-
                 setTimeout(() => {
                     this.logout();
                 }, 4000);
 
 
             } catch (error) {
-
+                console.error(error);
             }
         }
     },
@@ -178,15 +176,15 @@ export default {
     margin-right: 20px;
     min-width: 120px;
 }
+
 .list-enter-active,
 .list-leave-active {
     transition: all 2s ease;
 }
 
 .list-enter-from,
-.list-leave-to{
+.list-leave-to {
     opacity: 0;
     transform: translateX(300px);
 }
-
 </style>

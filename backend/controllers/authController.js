@@ -65,8 +65,11 @@ try {
 
     user.password = undefined;
 
+    const expirationTime = 60 * 60 * 24 * 7;
+
     //generate token
-    const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET_KEY, {expiresIn: process.env.JWT_EXPIRE_TIME,
+    const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET_KEY, {
+        expiresIn: expirationTime,
 
     });
 

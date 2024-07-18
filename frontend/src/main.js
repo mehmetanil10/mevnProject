@@ -23,10 +23,45 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsUp} from '@fortawesome/free-regular-svg-icons'
 import { faPenToSquare} from '@fortawesome/free-regular-svg-icons'
 import { faTrash} from '@fortawesome/free-solid-svg-icons'
+import { useToast } from "vue-toastification";
+
+
+const toast = useToast();
+
+toast.success('New Book Added Succesfully!', {
+    position: "top-right",
+    timeout: 1000,
+    closeButton: "button",
+    icon: true,
+    rtl: false,
+});
 
 library.add(faArrowLeft, faThumbsUp, faPenToSquare, faTrash)
 
 const pinia = createPinia();
+const authStore = useAuthStore(pinia);
+
+axios.interceptors.response.use(
+    response => response,
+error => {
+    if(error.response && error.response.status === 401) {
+        toast.error('Your token has expired, forwarding login page', {
+            position: "top-right",
+            timeout: 3000,
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+        });
+
+        setTimeout(() => {
+            authStore.logout();
+            router.push('/login')
+
+        }, 3000);
+
+
+    }
+})
 
 const storedUser = localStorage.getItem('user');
 
@@ -43,6 +78,8 @@ if(storedUser) {
 }
 
 const bookStore = useBookStore(pinia);
+
+
 
 bookStore.fetchBooks().then(()=> {
 
