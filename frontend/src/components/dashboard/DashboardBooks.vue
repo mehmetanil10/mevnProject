@@ -129,6 +129,18 @@ export default {
     methods: {
         ...mapActions(useBookStore, ['addNewBook', 'fetchBooksByUploader', 'deleteTheBook']),
 
+        showToast(message, options) {
+
+            const toast = useToast();
+            toast(message, {
+                position: "top-right",
+                closeButton: "button",
+                icon: true,
+                rtl: false,
+                ...options,
+            })
+        },
+
         async deleteBook(bookId, bookTitle) {
             try {
                 await this.deleteTheBook(bookId);
@@ -137,18 +149,16 @@ export default {
 
                 await this.fetchBooksByUploader();
 
-                const toast = useToast();
+                // const toast = useToast();
 
-                toast.warning(`${bookTitle} deleted succesfully`, {
-                    position: "top-right",
-                    timeout: 3000,
-                    closeButton: "button",
-                    icon: true,
-                    rtl: false,
-                });
-                setTimeout(() => {
-                    this.logout();
-                }, 4000);
+                // toast.warning(`${bookTitle} deleted succesfully`, {
+                //     position: "top-right",
+                //     timeout: 3000,
+                //     closeButton: "button",
+                //     icon: true,
+                //     rtl: false,
+                // });
+                this.showToast(`${bookTitle} deleted succesfully`, { type: 'warning', timeout: 3000 })
 
 
             } catch (error) {
@@ -171,18 +181,20 @@ export default {
 
                 await this.fetchBooksByUploader();
 
-                const toast = useToast();
+                // const toast = useToast();
 
-                toast.success('New Book Added Succesfully!', {
-                    position: "top-right",
-                    timeout: 1000,
-                    closeButton: "button",
-                    icon: true,
-                    rtl: false,
-                });
-                setTimeout(() => {
-                    this.logout();
-                }, 4000);
+                // toast.success('New Book Added Succesfully!', {
+                //     position: "top-right",
+                //     timeout: 1000,
+                //     closeButton: "button",
+                //     icon: true,
+                //     rtl: false,
+                // });
+                // setTimeout(() => {
+                //     this.logout();
+                // }, 4000);
+
+                this.showToast('New Book Added Succesfully!', { type: 'success', timeout: 1000 })
 
 
             } catch (error) {
