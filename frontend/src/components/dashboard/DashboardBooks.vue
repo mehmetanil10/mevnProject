@@ -35,7 +35,7 @@
                             </td>
                             <td class="text-center">
                                 <font-awesome-icon :icon="['fas', 'trash']" class="text-danger" style="cursor: pointer"
-                                    @click="deleteBook(book._id)" />
+                                    @click="deleteBook(book._id, book.title)" />
                             </td>
                         </tr>
                     </TransitionGroup>
@@ -127,7 +127,35 @@ export default {
 
 
     methods: {
-        ...mapActions(useBookStore, ['addNewBook', 'fetchBooksByUploader']),
+        ...mapActions(useBookStore, ['addNewBook', 'fetchBooksByUploader', 'deleteTheBook']),
+
+        async deleteBook(bookId, bookTitle) {
+            try {
+                await this.deleteTheBook(bookId);
+
+                this.modal.hide();
+
+                await this.fetchBooksByUploader();
+
+                const toast = useToast();
+
+                toast.warning(`${bookTitle} deleted succesfully`, {
+                    position: "top-right",
+                    timeout: 3000,
+                    closeButton: "button",
+                    icon: true,
+                    rtl: false,
+                });
+                setTimeout(() => {
+                    this.logout();
+                }, 4000);
+
+
+            } catch (error) {
+                console.error(error);
+            }
+        },
+
         async addBook() {
             try {
                 await this.addNewBook(this.newBook);
