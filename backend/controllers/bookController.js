@@ -86,7 +86,7 @@ try {
 const updateABook = async(req, res) => {
     const {id} = req.params;
 
-const { title, author, description,pageNumber, rating } = req.body;
+const { title, author, description,pageNumber } = req.body;
 
     if (isValidObjectId(id, res)) return;
 
@@ -98,11 +98,10 @@ try {
     book.author = author || book.author;
     book.description = description || book.description;
     book.pageNumber = pageNumber || book.pageNumber;
-    book.rating = rating || book.rating;
 
     await book.save();
 
-    res.status(200).json({message: 'The book updated succesfully'})
+    res.status(200).json({message: 'The book updated succesfully',book})
 
 
 } catch (error) {
