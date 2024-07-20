@@ -19,10 +19,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import { faThumbsUp} from '@fortawesome/free-regular-svg-icons'
-import { faPenToSquare} from '@fortawesome/free-regular-svg-icons'
-import { faTrash} from '@fortawesome/free-solid-svg-icons'
+import { faThumbsUp, faArrowLeft,faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faThumbsUp as farThumbsUp, faPenToSquare} from '@fortawesome/free-regular-svg-icons'
 import { useToast } from "vue-toastification";
 
 
@@ -36,7 +34,7 @@ toast.success('New Book Added Succesfully!', {
     rtl: false,
 });
 
-library.add(faArrowLeft, faThumbsUp, faPenToSquare, faTrash)
+library.add(faArrowLeft, faThumbsUp, faPenToSquare, faTrash, farThumbsUp)
 
 const pinia = createPinia();
 const authStore = useAuthStore(pinia);

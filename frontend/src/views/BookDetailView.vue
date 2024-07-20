@@ -1,100 +1,120 @@
 <template>
-    <section>
-        <div class="container" v-if="!loading">
-            <SectionHeader :title="book.title" :text="book.author" />
-            <font-awesome-icon icon="arrow-left" size="2xl" class="mb-4" style="cursor: pointer"
-                @click="goToBackBooks" />
-            <div class="row mb-4">
-                <div class="col-lg-6">
-                    <img class="card-img-top" src="../../template/images/b1.jpg">
+    <div class="container">
+        <SectionHeader :title="book.title" :text="book.author" />
+        <div class="d-flex">
+            <font-awesome-icon icon="arrow-left" size="xl" class="mb-2"
+                style="cursor: pointer; color: var(--secondary-color)" @click="goToBackBooks" />
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="image-box">
+                    <img class="img-fluid" src="../../template/images/b2.jpg" />
                 </div>
-                <div class="col-lg-6">
-                    <p class="lead description">{{ book.description }}</p>
-                    <div class="mb-4">
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex flex-column h-100 justify-content-between">
+                    <div class="mb-3">
+                        <p>
+                            {{ book.description }}
+                        </p>
+                    </div>
+                    <div class="d-flex flex-column">
                         <div class="row border-bottom pb-2">
                             <div class="col-lg-6"><strong>Page</strong></div>
                             <div class="col-lg-6">{{ book.pageNumber }}</div>
                         </div>
                         <div class="row border-bottom pb-2">
-                            <div class="col-lg-6"><strong>Category</strong></div>
-                            <div class="col-lg-6">Fiction</div>
-                        </div>
-                        <div class="row border-bottom pb-2">
                             <div class="col-lg-6"><strong>Rating</strong></div>
-                            <div class="col-lg-6">{{ book.rating }}</div>
+                            <div class="col-lg-6">8.2 - (23 rates)</div>
                         </div>
                         <div class="row border-bottom pb-2">
                             <div class="col-lg-6"><strong>Upload Date</strong></div>
                             <div class="col-lg-6">{{ book.updatedAt }}</div>
                         </div>
                     </div>
-                    <div class="comments-section">
-                        <h3 display-6 mb-2>Comments</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="box">
+                    <h3 style="color: var(--primary-color)">Rate The Book</h3>
+                    <form>
+                        <!-- Rating Input -->
+                        <div class="mb-3">
+                            <input type="number" id="rating" class="form-control w-50" min="1" max="10"
+                                placeholder="Rate (1-10)" required />
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary">Rate</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="box">
+                    <h3 style="color: var(--primary-color)">Comment The Book</h3>
+                    <form>
+                        <!-- Comment Text Area -->
+                        <div class="mb-3">
+                            <textarea id="comment" class="form-control" rows="4" placeholder="Enter your comment"
+                                required></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary">Comment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row my-3">
+            <div class="col-md-12">
+                <div class="box">
+                    <h3 style="color: var(--primary-color)">Comments</h3>
+                    <div>
                         <div class="card mb-4">
                             <div class="card-body">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, laborum?</p>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                </p>
+
                                 <div class="d-flex justify-content-between">
-                                    <p class="fw-bold-fst-italic"> John Doe</p>
-                                    <div class="d-flex align-items-center">
+                                    <div class="d-flex flex-row align-items-center">
+                                        <p class="small mb-0 ms-2">Username</p>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center" style="gap: 10px">
+                                        <p class="small text-muted mb-0">Upvote?</p>
                                         <font-awesome-icon :icon="['far', 'thumbs-up']" />
-                                        <p class="ps-2 mb-0"><strong>8</strong></p>
+                                        <p class="small text-muted mb-0">3</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card mb-4">
                             <div class="card-body">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, laborum?</p>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                </p>
+
                                 <div class="d-flex justify-content-between">
-                                    <p class="fw-bold-fst-italic"> John Doe</p>
-                                    <div class="d-flex align-items-center">
-                                        <font-awesome-icon :icon="['far', 'thumbs-up']" />
-                                        <p class="ps-2 mb-0"><strong>8</strong></p>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <p class="small mb-0 ms-2">Username</p>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae unde odio
-                                    numquam odit vero assumenda consequuntur temporibus soluta consequatur! Dolore
-                                    ratione reiciendis laborum excepturi, dolores, nesciunt placeat quibusdam fugit eos
-                                    nam officia a sapiente exercitationem incidunt commodi voluptate, quis illum ipsam
-                                    non dicta tempore quo repellendus. Dignissimos blanditiis quaerat officiis nostrum
-                                    voluptas saepe eaque, at, nihil dolorem odit qui quasi doloribus possimus esse
-                                    corporis similique architecto eligendi sit aliquam ut laborum? Perspiciatis deleniti
-                                    adipisci laudantium debitis sit accusantium eveniet, ipsa iste. Architecto, dolor
-                                    praesentium accusantium rem eaque deleniti harum hic placeat inventore soluta
-                                    recusandae, facere voluptatem aliquid dolorum corporis in?</p>
-                                <div class="d-flex justify-content-between">
-                                    <p class="fw-bold-fst-italic"> John Doe</p>
-                                    <div class="d-flex align-items-center">
-                                        <font-awesome-icon :icon="['far', 'thumbs-up']" />
-                                        <p class="ps-2 mb-0"><strong>8</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, laborum?</p>
-                                <div class="d-flex justify-content-between">
-                                    <p class="fw-bold-fst-italic"> John Doe</p>
-                                    <div class="d-flex align-items-center">
-                                        <font-awesome-icon :icon="['far', 'thumbs-up']" />
-                                        <p class="ps-2 mb-0"><strong>8</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, laborum?</p>
-                                <div class="d-flex justify-content-between">
-                                    <p class="fw-bold-fst-italic"> John Doe</p>
-                                    <div class="d-flex align-items-center">
-                                        <font-awesome-icon :icon="['far', 'thumbs-up']" />
-                                        <p class="ps-2 mb-0"><strong>8</strong></p>
+                                    <div class="d-flex flex-row align-items-center" style="gap: 10px">
+                                        <p class="small mb-0">Upvoted</p>
+                                        <font-awesome-icon :icon="['fas', 'thumbs-up']"
+                                            style="color: var(--secondary-color)" />
+                                        <p class="small text-muted mb-0">4</p>
                                     </div>
                                 </div>
                             </div>
@@ -103,81 +123,62 @@
                 </div>
             </div>
         </div>
-        <div class="container" v-else>
-            <p>Book Detail loading...</p>
-        </div>
-    </section>
+    </div>
 </template>
 
 <script>
 import SectionHeader from '@/components/SectionHeader.vue';
-import { useBookStore } from "@/stores/bookStore";
-import { mapState } from "pinia";
-
+import { useBookStore } from '@/stores/bookStore.js';
+import { mapState } from 'pinia';
 export default {
-    name: "BookDetailView",
+    name: 'BookDetailView',
     components: {
-        SectionHeader
+        SectionHeader,
     },
     data() {
         return {
-            books: null,
-            loading: true
-        }
+            book: null,
+            loading: true,
+        };
     },
     created() {
         this.selectBook();
-        // const bookId = this.$route.params.id;
-        // this.book = books.find(book => book.id === parseInt(bookId))
     },
     methods: {
         goToBackBooks() {
-            this.$router.push({ name: "books" })
+            this.$router.push({ name: 'books' });
         },
-
-
         selectBook() {
             const bookId = this.$route.params.id;
-            this.book = this.selectedBook(bookId)
+            this.book = this.selectedBook(bookId);
             this.loading = false;
-        }
-        // async fetchABook() {
-        //     const bookId = this.$route.params.id;
-        //     try {
-        //         const response = await fetch(`http://localhost:3000/api/v1/books/${bookId}`);
-        //         const data = await response.json();
-        //         this.book = data;
-        //         this.loading = false;
-        //     } catch (error) {
-
-        //     }
-
-        // }
+        },
     },
     computed: {
         ...mapState(useBookStore, ['selectedBook']),
-    }
-
-}
+    },
+};
 </script>
+
 <style scoped>
-.details-wrapper {
-    max-height: 740px;
-    display: flex;
-    flex-direction: column;
+.image-box {
+    height: 300px;
+    overflow: hidden;
 }
 
-.comments-section {
-    flex-grow: 1;
-    overflow-y: auto;
-    min-height: 150px;
-    max-height: 250px;
-
+.image-box img {
+    width: 100% !important;
 }
 
-.description {
-    min-height: 150px;
-    max-height: 250px;
-    overflow-y: auto;
+.btn-primary {
+    height: 36px;
+    min-width: 120px;
+    border-radius: 16px;
+}
+
+.box {
+    border: 1px solid #e2e3e5;
+    border-radius: 10px;
+    padding: 20px;
 }
 </style>
