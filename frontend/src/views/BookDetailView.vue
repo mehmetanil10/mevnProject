@@ -57,11 +57,11 @@
             <div class="col-md-12">
                 <div class="box">
                     <h3 style="color: var(--primary-color)">Comment The Book</h3>
-                    <form>
+                    <form @submit.prevent="addComment">
                         <!-- Comment Text Area -->
                         <div class="mb-3">
                             <textarea id="comment" class="form-control" rows="4" placeholder="Enter your comment"
-                                required></textarea>
+                                required v-model="commentContent"></textarea>
                         </div>
 
                         <!-- Submit Button -->
@@ -129,7 +129,9 @@
 <script>
 import SectionHeader from '@/components/SectionHeader.vue';
 import { useBookStore } from '@/stores/bookStore.js';
-import { mapState } from 'pinia';
+import { useAuthStore } from '@/stores/authStore.js';
+import { useCommentStore } from '@/stores/commentStore.js';
+import { mapState, mapActions } from 'pinia';
 export default {
     name: 'BookDetailView',
     components: {
@@ -139,12 +141,30 @@ export default {
         return {
             book: null,
             loading: true,
+            commentContent: "",
         };
     },
     created() {
         this.selectBook();
     },
     methods: {
+        ...mapActions(useCommentStore, ['addNewComment']),
+        async addComment() {
+            try {
+                const bookId = this.$route.params.id;
+                const content = this.commentContent;
+
+                const user = this.user
+                const userId = this.user.user._id;
+                await this.addNewComment({
+                    bookId,
+                    content,
+                    userId,
+                });
+            } catch (error) {
+
+            }
+        },
         goToBackBooks() {
             this.$router.push({ name: 'books' });
         },
@@ -156,6 +176,7 @@ export default {
     },
     computed: {
         ...mapState(useBookStore, ['selectedBook']),
+        ...mapState(useAuthStore, ['user']),
     },
 };
 </script>
