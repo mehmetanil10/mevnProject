@@ -4,12 +4,11 @@ import axios from 'axios';
 export const useCommentStore = defineStore('commentStore', {
     state: () => ({
         comments: [],
-        
+        commentsForBook: [],
     }),
   
     actions: {
         async addNewComment(newComment) {
-            console.log("newComment", newComment);
             try {
                 const response = await axios.post(
                     'http://localhost:3000/api/v1/comments',
@@ -20,7 +19,18 @@ export const useCommentStore = defineStore('commentStore', {
             } catch (error) {
                     throw error.response.data;
             }
-        }
+        },
 
+
+    async fetchCommensForBook(bookId) {
+        try {
+
+            const response = await axios.get(`http://localhost:3000/api/v1/comments/book/${bookId}`);
+
+            this.commentsForBook = response.data.comments;
+        } catch (error) {
+            console.log(error);
+        }
+    }
   },
 });
