@@ -11,9 +11,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Content Detail</td>
-                        <td>Book Name</td>
+                    <tr v-for="comment in commentsByUser" :key="comment._id">
+                        <td>{{comment.content}}</td>
+                        <td>{{comment.book.title}}</td>
                         <td class="text-center">
                             <font-awesome-icon :icon="['far', 'pen-to-square']" class="text-warning"
                                 style="cursor: pointer" />
@@ -29,8 +29,21 @@
 </template>
 
 <script>
+import { useCommentStore } from '@/stores/commentStore.js';
+import { useAuthStore } from '@/stores/authStore.js';
+import { mapState, mapActions } from 'pinia';
 export default {
     name: 'DashboardComments',
+    methods: {
+        ...mapActions(useCommentStore, ['fetchCommentsByUser'])
+    },
+    computed: {
+        ...mapState(useCommentStore, ['commentsByUser']),
+        ...mapState(useAuthStore, ['user']),
+    },
+    created() {
+        this.fetchCommentsByUser(this.user._id);
+    },
 };
 </script>
 

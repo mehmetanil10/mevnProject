@@ -78,17 +78,14 @@ export default {
                     rtl: false,
                 });
 
-
                 setTimeout(() => {
                     this.logout();
                 }, 4000);
 
-
-
             } catch (error) {
 
             }
-
+            
         },
         cancelEditMode() {
             this.editMode = false;

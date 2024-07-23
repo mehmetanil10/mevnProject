@@ -5,6 +5,7 @@ export const useCommentStore = defineStore('commentStore', {
     state: () => ({
         comments: [],
         commentsForBook: [],
+        commentsByUser: [],
     }),
   
     actions: {
@@ -14,7 +15,6 @@ export const useCommentStore = defineStore('commentStore', {
                     'http://localhost:3000/api/v1/comments',
                     newComment
                   );
-
                   this.comments.push(response.data.comment)
             } catch (error) {
                     throw error.response.data;
@@ -22,7 +22,7 @@ export const useCommentStore = defineStore('commentStore', {
         },
 
 
-    async fetchCommensForBook(bookId) {
+    async fetchCommentsForBook(bookId) {
         try {
 
             const response = await axios.get(`http://localhost:3000/api/v1/comments/book/${bookId}`);
@@ -31,6 +31,16 @@ export const useCommentStore = defineStore('commentStore', {
         } catch (error) {
             console.log(error);
         }
-    }
+    },
+    async fetchCommentsByUser(userId) {
+        try {
+
+            const response = await axios.get(`http://localhost:3000/api/v1/comments/user/${userId}`);
+
+            this.commentsByUser = response.data.comments;
+        } catch (error) {
+            console.log(error);
+        }
+    },
   },
 });

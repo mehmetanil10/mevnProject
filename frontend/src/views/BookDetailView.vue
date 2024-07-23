@@ -1,9 +1,7 @@
 <template>
     <div class="container">
         <SectionHeader :title="book.title" :text="book.author" />
-        <div>
-            {{ commentsForBook }}
-        </div>
+
         <div class="d-flex">
             <font-awesome-icon icon="arrow-left" size="xl" class="mb-2"
                 style="cursor: pointer; color: var(--secondary-color)" @click="goToBackBooks" />
@@ -155,10 +153,10 @@ export default {
     },
     created() {
         this.selectBook();
-        this.fetchCommensForBook(this.$route.params.id);
+        this.fetchCommentsForBook(this.$route.params.id);
     },
     methods: {
-        ...mapActions(useCommentStore, ['addNewComment', 'fetchCommensForBook']),
+        ...mapActions(useCommentStore, ['addNewComment', 'fetchCommentsForBook']),
         async addComment() {
             try {
                 const bookId = this.$route.params.id;
@@ -172,7 +170,7 @@ export default {
                 });
 
                 this.commentContent = '';
-                await this.fetchCommensForBook(this.$route.params.id);
+                await this.fetchCommentsForBook(this.$route.params.id);
 
             } catch (error) {
                 console.log(error)
